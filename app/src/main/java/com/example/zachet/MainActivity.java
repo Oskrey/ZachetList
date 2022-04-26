@@ -3,8 +3,10 @@ package com.example.zachet;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, list );
         ((ListView)findViewById(R.id.list)).setAdapter(adapter); //Установка списка в визуальный компонент
 
-        int[] positionID = new int[1];  //Создание массива для хранения выбранного элемента
+         int[] positionID = new int[1];  //Создание переменной для хранения выбранного элемента
         positionID[0] = -1;             //Установка значения на случай, если элемент не выбран
 
-        ((Button)findViewById(R.id.buttonAdd)).setOnClickListener(view -> { //Создание действия на кнопку добавления
+        findViewById(R.id.buttonAdd).setOnClickListener(view -> { //Создание действия на кнопку добавления
             AlertDialog.Builder bul = new AlertDialog.Builder(MainActivity.this);
             EditText input = new EditText(getApplicationContext());
             bul.setView(input).setMessage("Введите данные").setPositiveButton("Сохранить", (dialog, which) -> {
@@ -38,25 +40,21 @@ public class MainActivity extends AppCompatActivity {
             }).setNegativeButton("Отмена",(dialog, which) -> {});
             bul.show();
         });
-
-        ((ListView)findViewById(R.id.list)).setOnItemClickListener((parent, view, position, id) ->
-                positionID[0] = (int) id);//Получение ID элемента списка при клике на него
-
-        ((Button)findViewById(R.id.buttonDelete)).setOnClickListener(view -> {//Создание действия на кнопку удаления
+        ((ListView)findViewById(R.id.list)).setOnItemClickListener((parent, view, position, id) ->{
+                positionID[0] =  (int) id;});//Получение ID элемента списка при клике на него
+        findViewById(R.id.buttonDelete).setOnClickListener(view -> {//Создание действия на кнопку удаления
             if(positionID[0] != -1) //Если не невыбрано
             {
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
 
-                a_builder.setMessage("Удалить элемент?").setTitle("Удаление элемента").setIcon(R.drawable.ic_launcher_background).setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {dialog.cancel();}}).setPositiveButton("Выйти", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {finish();}});
-                a_builder.show();
-                adapter.remove(list.get(positionID[0]));
-                positionID[0] = -1;//Так как элемент удалён, ничего больше не выбрано
+                alertBuilder.setMessage("Вы действительно хотите удалить элемент "+list.get(positionID[0])+"?" )
+                        .setPositiveButton("OK", (dialogInterface, i) -> {adapter.remove(list.get(positionID[0])); positionID[0] = -1; })
+                        .setNegativeButton("Отмена",(dialogInterface, i) -> dialogInterface.cancel() )
+                        .setTitle("Внимание").setIcon(R.drawable.error).show();
             }
         });
 
-        ((Button)findViewById(R.id.buttonEdit)).setOnClickListener(view -> {//Создание действия на кнопку редактирования
+        findViewById(R.id.buttonEdit).setOnClickListener(view -> {//Создание действия на кнопку редактирования
             if(positionID[0] != -1) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

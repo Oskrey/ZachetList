@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pedic/AndroidStudioProjects/Zachet/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.149" />
+        <entry key="..\:/Users/pedic/AndroidStudioProjects/Zachet/app/src/main/res/drawable/ic_launcher_background.xml" value="0.149" />
         <entry key="..\:/Users/pedic/AndroidStudioProjects/Zachet/app/src/main/res/layout/activity_main.xml" value="0.322463768115942" />
-        <entry key="..\:/Users/pedic/ZachetList/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
       </map>
     </option>
   </component>
