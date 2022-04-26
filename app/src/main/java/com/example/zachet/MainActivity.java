@@ -3,6 +3,7 @@ package com.example.zachet;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,8 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         ((Button)findViewById(R.id.buttonDelete)).setOnClickListener(view -> {//Создание действия на кнопку удаления
             if(positionID[0] != -1) //Если не невыбрано
-            adapter.remove(list.get(positionID[0]));
-            positionID[0] = -1;//Так как элемент удалён, ничего больше не выбрано
+            {
+                AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+
+                a_builder.setMessage("Удалить элемент?").setTitle("Удаление элемента").setIcon(R.drawable.ic_launcher_background).setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {dialog.cancel();}}).setPositiveButton("Выйти", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {finish();}});
+                a_builder.show();
+                adapter.remove(list.get(positionID[0]));
+                positionID[0] = -1;//Так как элемент удалён, ничего больше не выбрано
+            }
         });
 
         ((Button)findViewById(R.id.buttonEdit)).setOnClickListener(view -> {//Создание действия на кнопку редактирования
